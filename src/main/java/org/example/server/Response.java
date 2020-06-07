@@ -59,18 +59,24 @@ public class Response {
         responseHeader.append(CRLF);
     }
 
-    public void pushHeader (int statusCode, String mimetype, int contentLength) throws IOException {
-        buildResponseHeader(statusCode, mimetype, contentLength);
+    public void pushHeader(int statusCode, String mimeType, int contentLength) {
+        buildResponseHeader(statusCode, mimeType, contentLength);
         ByteBuf byteBuf = client.alloc().buffer();
+        // TODO: charset problem
         byteBuf.writeCharSequence(responseHeader, Charset.defaultCharset());
         client.write(byteBuf);
         client.flush();
     }
 
-    public void pushContent(byte[] data, int off, int len) throws IOException {
+    public void pushContent(byte[] data, int off, int len) {
         ByteBuf byteBuf = client.alloc().buffer();
         byteBuf.writeBytes(data, off, len);
         client.write(byteBuf);
+        client.flush();
+    }
+
+    public void pushContent(ByteBuf content) {
+        client.write(content);
         client.flush();
     }
 

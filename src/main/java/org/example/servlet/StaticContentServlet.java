@@ -1,4 +1,4 @@
-package org.example.Servlet;
+package org.example.servlet;
 
 import org.example.server.Request;
 import org.example.server.Response;
@@ -20,6 +20,9 @@ public class StaticContentServlet implements Servlet{
         // }
 
         String url = request.getUrl();
+        if (url.equals("/")) {
+            url += "index.html";
+        }
         String mimeType = Constant.DEFAULT_MIME_TYPE;
         String suffix = url.substring(url.lastIndexOf(".")+1);
         // System.out.println("suffix is " + suffix);
@@ -37,6 +40,7 @@ public class StaticContentServlet implements Servlet{
 
         FileInputStream fis = null;
         try {
+            // TODO: 0-copy with FileRegion
             fis = new FileInputStream(Constant.webRoot + url);
             response.pushHeader(statusCode, mimeType, fis.available());
             byte[] bytes = new byte[4096];

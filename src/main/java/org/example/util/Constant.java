@@ -42,4 +42,8 @@ public class Constant {
     public static final String DEFAULT_MIME_TYPE = "text/html";
 
     public static final String webRoot = "/home/luke/Documents/webroot";
+
+    public static final String HTTP_GET = "GET";
+
+    public static final String HTTP_POST = "POST";
 }

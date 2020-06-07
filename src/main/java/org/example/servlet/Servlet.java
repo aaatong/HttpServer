@@ -1,9 +1,10 @@
-package org.example.Servlet;
+package org.example.servlet;
 
 import org.example.server.Request;
 import org.example.server.Response;
 
 public interface Servlet {
 
-    public void service(Request request, Response response);
+    void service(Request request, Response response);
+
 }

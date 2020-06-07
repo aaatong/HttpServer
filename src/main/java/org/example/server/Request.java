@@ -1,19 +1,24 @@
 package org.example.server;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Request {
 
     private String url;
 
-    // public Request() {
-    //
-    // }
-    //
+    private String httpMethod = null;
+
+    private ByteBuf messageBody = null;
+
     // public Request(Socket client) {
     //     try {
     //         is = client.getInputStream();
@@ -73,6 +78,22 @@ public class Request {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public ByteBuf getMessageBody() {
+        return messageBody;
+    }
+
+    public void setMessageBody(ByteBuf messageBody) {
+        this.messageBody = messageBody;
+    }
+
+    public String getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(String httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
     // public boolean isValid() {

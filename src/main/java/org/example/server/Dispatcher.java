@@ -1,13 +1,9 @@
 package org.example.server;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.example.Servlet.Servlet;
-import org.example.Servlet.StaticContentServlet;
-import sun.net.dns.ResolverConfiguration;
-
-import java.net.Socket;
+import org.example.servlet.Servlet;
+import org.example.servlet.StaticContentServlet;
 
 // public class Dispatcher implements Runnable{
 //
@@ -33,12 +29,13 @@ public class Dispatcher extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         Request request = (Request)msg;
-        System.out.println(request.getUrl());
         Response response = new Response(ctx.channel());
 
-        Servlet servlet = new StaticContentServlet();
+        Servlet servlet = ServletContext.getServlet(request.getUrl().split("\\?")[0]);
+        if (servlet == null) {
+            servlet = new StaticContentServlet();
+        }
         servlet.service(request, response);
-        System.out.println("Bingo!");
     }
 
     @Override
